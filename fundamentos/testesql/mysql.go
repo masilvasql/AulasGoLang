@@ -8,27 +8,28 @@ import (
 )
 
 type Tag struct {
-	id           int
-	nomeUsuario  string
-	loginUsuario string
+	idUsuario int
+	deslogin  string
+	dessenha  string
 }
 
 func main() {
-	db, err := sql.Open("mysql", "masilva:spfc251191@(mysql472.umbler.com:41890)/barbearialucas")
+	fmt.Println("Go MySQL Tutorial")
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/dbphp7")
 
 	if err != nil {
 		panic(err.Error())
 	}
 
 	defer db.Close()
-	rows, err := db.Query("SELECT idUsuario, nomeUsuario, loginUsuario FROM usuario")
+	rows, err := db.Query("SELECT idUsuario, deslogin, dessenha FROM tb_usuarios")
 
 	for rows.Next() {
 		var tag Tag
-		err = rows.Scan(&tag.id, &tag.nomeUsuario, &tag.loginUsuario)
+		err = rows.Scan(&tag.idUsuario, &tag.deslogin, &tag.dessenha)
 		if err != nil {
 			panic("deu erro" + err.Error())
 		}
-		fmt.Println(tag.id, tag.nomeUsuario, tag.loginUsuario)
+		fmt.Println(tag.idUsuario, tag.deslogin, tag.dessenha)
 	}
 }
